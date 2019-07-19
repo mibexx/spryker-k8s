@@ -15,6 +15,11 @@ spec:
           volumeMounts:
             - mountPath: "/srv/spryker"
               name: spryker-b2b-storage
+          resources:
+            limits:
+              memory: 4092Mi
+            requests:
+              memory: 2048Mi
       volumes:
         - name: spryker-b2b-storage
           persistentVolumeClaim:
