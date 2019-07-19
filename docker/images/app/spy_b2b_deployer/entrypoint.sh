@@ -8,7 +8,7 @@ git clone $REPOSITORY $SPRYKER_DIR
 cp -rfp /srv/configs/* $SPRYKER_DIR/config/Shared/
 
 composer install --prefer-dist
-php -d memory_limit=-1 vendor/bin/install
+/usr/bin/php -d memory_limit=-1 vendor/bin/install
 
 chown -Rf nginx:nginx $SPRYKER_DIR/data
 
