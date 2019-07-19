@@ -21,7 +21,7 @@ spec:
       containers:
         - name: spy-glue
           image: mibexx/k8s-spryker:b2b-glue
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           volumeMounts:

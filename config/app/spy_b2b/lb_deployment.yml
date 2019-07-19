@@ -17,6 +17,6 @@ spec:
       containers:
         - name: spy-loadbalancer
           image: mibexx/k8s-lb:spryker-b2b
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

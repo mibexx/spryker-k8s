@@ -21,7 +21,7 @@ spec:
       containers:
         - name: spy-zed
           image: mibexx/k8s-spryker:b2b-zed
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           volumeMounts:
