@@ -39,7 +39,8 @@ RUN apk update \
     npm \
  && mkdir -p /var/log/supervisor \
  && mkdir -p /run/nginx \
- && mkdir -p /var/run/php-fpm
+ && mkdir -p /var/run/php-fpm \
+ && sed -i 's/user nginx;/user root;/g' /etc/nginx/nginx.conf
 
 RUN composer global require hirak/prestissimo
 
