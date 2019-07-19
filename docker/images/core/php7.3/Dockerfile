@@ -47,6 +47,7 @@ RUN composer global require hirak/prestissimo
 COPY entrypoint.sh /entrypoint.sh
 COPY conf/supervisor/supervisord.conf /etc/supervisord.conf
 COPY conf/supervisor/conf.d /etc/supervisor/conf.d
+COPY conf/php /etc/php7/conf.d
 
 RUN chmod +x /entrypoint.sh
 
