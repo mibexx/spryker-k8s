@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-elasticsearch
+  labels:
+    mibexx-env: env_elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-env: env_elasticsearch
+  template:
+    metadata:
+      labels:
+        mibexx-env: env_elasticsearch
+    spec:
+      containers:
+        - name: env-elasticsearch
+          image: elasticsearch:5-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+              - containerPort: 9200

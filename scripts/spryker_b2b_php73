@@ -1,0 +1,70 @@
+#!/bin/bash
+
+if [ "$PATH" == "" ]; then
+  echo "PATH is missing"
+  exit;
+fi
+
+# includes
+source $PATH/scripts/wizard/dependencies
+
+run() {
+    # Environment
+    run_postgres
+    run_redis
+    run_rabbitmq
+    run_elasticsearch
+
+    # Volumes
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/volume.yml
+
+    # Jenkins
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/jenkins/deployment.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/jenkins/service.yml
+
+    # Pods
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/zed_deployment.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/glue_deployment.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/yves_deployment.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/lb_deployment.yml
+
+    # Services
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/zed_service.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/glue_service.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/yves_service.yml
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/lb_service.yml
+
+
+}
+
+rm() {
+    # Jenkins
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/jenkins/deployment.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/jenkins/service.yml
+
+    # Services
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/zed_service.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/glue_service.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/yves_service.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/lb_service.yml
+
+    # Pods
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/zed_deployment.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/glue_deployment.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/yves_deployment.yml
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/lb_deployment.yml
+
+    # Volumes
+    $KUBECTL delete -f $PATH/config/app/spy_b2b/volume.yml
+
+    # Environment
+    rm_postgres
+    rm_redis
+    rm_rabbitmq
+    rm_elasticsearch
+}
+
+install() {
+    # Installer
+    $KUBECTL apply -f $PATH/config/app/spy_b2b/installer.yml
+}

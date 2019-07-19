@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-yves
+  labels:
+    mibexx-app: spryker_b2b_yves
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-app: spryker_b2b_yves
+  template:
+    metadata:
+      labels:
+        mibexx-app: spryker_b2b_yves
+    spec:
+      volumes:
+        - name: spryker-b2b-storage
+          persistentVolumeClaim:
+            claimName: spryker-b2b-claim
+      containers:
+        - name: spy-yves
+          image: mibexx/k8s-spryker:b2b-yves
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: "/srv/spryker"
+              name: spryker-b2b-storage

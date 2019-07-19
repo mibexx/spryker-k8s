@@ -1,0 +1,3 @@
+#!/bin/bash
+
+source $PATH/scripts/spryker_b2b_php73

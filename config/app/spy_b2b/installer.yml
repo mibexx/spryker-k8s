@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spryker-b2b-installer
+spec:
+  template:
+    spec:
+      containers:
+        - name: spy-b2b-installer
+          image: mibexx/k8s-spryker:b2b-deployer
+          imagePullPolicy: Always
+          env:
+            - name: PGPASSWORD
+              value: "mBx.123"
+          volumeMounts:
+            - mountPath: "/srv/spryker"
+              name: spryker-b2b-storage
+      volumes:
+        - name: spryker-b2b-storage
+          persistentVolumeClaim:
+            claimName: spryker-b2b-claim
+      restartPolicy: Never

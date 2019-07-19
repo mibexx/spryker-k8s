@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-zed
+  labels:
+    mibexx-app: spryker_b2b_zed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-app: spryker_b2b_zed
+  template:
+    metadata:
+      labels:
+        mibexx-app: spryker_b2b_zed
+    spec:
+      volumes:
+        - name: spryker-b2b-storage
+          persistentVolumeClaim:
+            claimName: spryker-b2b-claim
+      containers:
+        - name: spy-zed
+          image: mibexx/k8s-spryker:b2b-zed
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: "/srv/spryker"
+              name: spryker-b2b-storage

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+run() {
+    $DOCKER build -t mibexx/k8s-app:7.3 $PATH/docker/images/core/php7.3
+    $DOCKER build -t mibexx/k8s-jenkins:7.3 $PATH/docker/images/core/jenkins7.3
+    $DOCKER build -t mibexx/k8s-lb:spryker-b2b $PATH/docker/images/lb/spryker_b2b
+    $DOCKER build -t mibexx/k8s-spryker:b2b-core $PATH/docker/images/app/spy_b2b_core
+    $DOCKER build -t mibexx/k8s-spryker:b2b-deployer $PATH/docker/images/app/spy_b2b_deployer
+    $DOCKER build -t mibexx/k8s-spryker:b2b-jenkins $PATH/docker/images/app/spy_b2b_jenkins
+    $DOCKER build -t mibexx/k8s-spryker:b2b-yves $PATH/docker/images/app/spy_b2b_yves
+    $DOCKER build -t mibexx/k8s-spryker:b2b-zed $PATH/docker/images/app/spy_b2b_zed
+    $DOCKER build -t mibexx/k8s-spryker:b2b-glue $PATH/docker/images/app/spy_b2b_glue
+}

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -z "$POSTGRES_VERSION" ]; then
+    POSTGRES_VERSION="9.6"
+fi
+
+run_postgres() {
+    $KUBECTL apply -f $PATH/config/postgres/$POSTGRES_VERSION/deployment.yml
+    $KUBECTL apply -f $PATH/config/postgres/$POSTGRES_VERSION/service.yml
+}
+
+rm_postgres() {
+    $KUBECTL delete -f $PATH/config/postgres/$POSTGRES_VERSION/service.yml
+    $KUBECTL delete -f $PATH/config/postgres/$POSTGRES_VERSION/deployment.yml
+}
+
+ask_postgres() {
+    while true; do
+        if [ "$1" == 1 ]; then
+            read -p "Do you need postgresql? [Yy|Nn]" yn
+        else
+            read -p "Do you want to delete postgresql? [Yy|Nn]" yn
+        fi
+        case $yn in
+            [Yy]* )
+                if [ "$1" == 1 ]; then
+                    run_postgres
+                else
+                    rm_postgres
+                fi
+                break
+                ;;
+            [Nn]* )
+                break
+                ;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}

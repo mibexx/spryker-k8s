@@ -1,0 +1,25 @@
+#!/bin/sh
+
+source $PATH/scripts/inc/postgres/default
+source $PATH/scripts/inc/redis/default
+source $PATH/scripts/inc/rabbitmq/default
+source $PATH/scripts/inc/elasticsearch/default
+source $PATH/scripts/inc/jenkins/default
+
+
+ask_run_env() {
+    ask_postgres 1
+    ask_redis 1
+    ask_rabbitmq 1
+    ask_elasticsearch 1
+    ask_jenkins 1
+}
+
+
+ask_rm_env() {
+    ask_postgres 0
+    ask_redis 0
+    ask_rabbitmq 0
+    ask_elasticsearch 0
+    ask_jenkins 0
+}

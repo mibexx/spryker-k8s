@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-redis
+  labels:
+    mibexx-env: env_redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-env: env_redis
+  template:
+    metadata:
+      labels:
+        mibexx-env: env_redis
+    spec:
+      containers:
+        - name: env-redis
+          image: redis:3.2.8-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+              - containerPort: 6379

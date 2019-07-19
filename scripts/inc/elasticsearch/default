@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -z "$ELASTICSEARCH_VERSION" ]; then
+    ELASTICSEARCH_VERSION="5"
+fi
+
+run_elasticsearch() {
+    $KUBECTL apply -f $PATH/config/elasticsearch/$ELASTICSEARCH_VERSION/deployment.yml
+    $KUBECTL apply -f $PATH/config/elasticsearch/$ELASTICSEARCH_VERSION/service.yml
+}
+
+rm_elasticsearch() {
+    $KUBECTL delete -f $PATH/config/elasticsearch/$ELASTICSEARCH_VERSION/service.yml
+    $KUBECTL delete -f $PATH/config/elasticsearch/$ELASTICSEARCH_VERSION/deployment.yml
+}
+
+ask_elasticsearch() {
+    while true; do
+        if [ "$1" == 1 ]; then
+            read -p "Do you need elasticsearch? [Yy|Nn]" yn
+        else
+            read -p "Do you want to delete elasticsearch? [Yy|Nn]" yn
+        fi
+        case $yn in
+            [Yy]* )
+                if [ "$1" == 1 ]; then
+                    run_elasticsearch
+                else
+                    rm_elasticsearch
+                fi
+                break
+                ;;
+            [Nn]* )
+                break
+                ;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}

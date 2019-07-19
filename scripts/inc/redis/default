@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -z "$REDIS_VERSION" ]; then
+    REDIS_VERSION="3.2"
+fi
+
+run_redis() {
+    $KUBECTL apply -f $PATH/config/redis/$REDIS_VERSION/deployment.yml
+    $KUBECTL apply -f $PATH/config/redis/$REDIS_VERSION/service.yml
+}
+
+rm_redis() {
+    $KUBECTL delete -f $PATH/config/redis/$REDIS_VERSION/service.yml
+    $KUBECTL delete -f $PATH/config/redis/$REDIS_VERSION/deployment.yml
+}
+
+ask_redis() {
+    while true; do
+        if [ "$1" == 1 ]; then
+            read -p "Do you need redis? [Yy|Nn]" yn
+        else
+            read -p "Do you want to delete redis? [Yy|Nn]" yn
+        fi
+        case $yn in
+            [Yy]* )
+                if [ "$1" == 1 ]; then
+                    run_redis
+                else
+                    rm_redis
+                fi
+                break
+                ;;
+            [Nn]* )
+                break
+                ;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}

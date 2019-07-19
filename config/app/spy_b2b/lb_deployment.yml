@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lb-sprykerb2b
+  labels:
+    mibexx-app: spryker_b2b_loadbalancer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-app: spryker_b2b_loadbalancer
+  template:
+    metadata:
+      labels:
+        mibexx-app: spryker_b2b_loadbalancer
+    spec:
+      containers:
+        - name: spy-loadbalancer
+          image: mibexx/k8s-lb:spryker-b2b
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+VERSION="default"
+
+if [ "$1" != "" ]; then
+  VERSION=$1
+fi
+
+PATH=$(dirname $0)
+KUBECTL="/usr/local/bin/kubectl"
+DOCKER="/usr/local/bin/docker"
+
+source ./scripts/$VERSION
+
+if [ -z "$2" ]; then
+    METHOD="run"
+else
+    METHOD=$2
+fi
+
+# Call run method
+$METHOD

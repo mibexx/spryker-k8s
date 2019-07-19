@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -z "$RABBITMQ_VERSION" ]; then
+    RABBITMQ_VERSION="3.7"
+fi
+
+run_rabbitmq() {
+    $KUBECTL apply -f $PATH/config/rabbitmq/$RABBITMQ_VERSION/deployment.yml
+    $KUBECTL apply -f $PATH/config/rabbitmq/$RABBITMQ_VERSION/service.yml
+}
+
+rm_rabbitmq() {
+    $KUBECTL delete -f $PATH/config/rabbitmq/$RABBITMQ_VERSION/service.yml
+    $KUBECTL delete -f $PATH/config/rabbitmq/$RABBITMQ_VERSION/deployment.yml
+}
+
+ask_rabbitmq() {
+    while true; do
+        if [ "$1" == 1 ]; then
+            read -p "Do you need rabbitmq? [Yy|Nn]" yn
+        else
+            read -p "Do you want to delete rabbitmq? [Yy|Nn]" yn
+        fi
+        case $yn in
+            [Yy]* )
+                if [ "$1" == 1 ]; then
+                    run_rabbitmq
+                else
+                    rm_rabbitmq
+                fi
+                break
+                ;;
+            [Nn]* )
+                break
+                ;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}

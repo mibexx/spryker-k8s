@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-postgres
+  labels:
+    mibexx-env: env_postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-env: env_postgres
+  template:
+    metadata:
+      labels:
+        mibexx-env: env_postgres
+    spec:
+      containers:
+        - name: env-postgres
+          image: postgres:9.6-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+              - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "mibexx"
+            - name: POSTGRES_PASSWORD
+              value: "mBx.123"

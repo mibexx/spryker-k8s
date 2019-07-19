@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: env-jenkins
+  labels:
+    mibexx-env: env_jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      mibexx-env: env_jenkins
+  template:
+    metadata:
+      labels:
+        mibexx-env: env_jenkins
+    spec:
+      containers:
+        - name: env-jenkins
+          image: mibexx/k8s-jenkins:7.3
+          imagePullPolicy: IfNotPresent
+          ports:
+              - containerPort: 8080

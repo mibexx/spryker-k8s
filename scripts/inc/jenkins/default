@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -z "$JENKINS_VERSION" ]; then
+    JENKINS_VERSION="2"
+fi
+
+run_jenkins() {
+    $KUBECTL apply -f $PATH/config/jenkins/$JENKINS_VERSION/deployment.yml
+    $KUBECTL apply -f $PATH/config/jenkins/$JENKINS_VERSION/service.yml
+}
+
+rm_jenkins() {
+    $KUBECTL delete -f $PATH/config/jenkins/$JENKINS_VERSION/service.yml
+    $KUBECTL delete -f $PATH/config/jenkins/$JENKINS_VERSION/deployment.yml
+}
+
+ask_jenkins() {
+    while true; do
+        if [ "$1" == 1 ]; then
+            read -p "Do you need jenkins? [Yy|Nn]" yn
+        else
+            read -p "Do you want to delete jenkins? [Yy|Nn]" yn
+        fi
+        case $yn in
+            [Yy]* )
+                if [ "$1" == 1 ]; then
+                    run_jenkins
+                else
+                    rm_jenkins
+                fi
+                break
+                ;;
+            [Nn]* )
+                break
+                ;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}
