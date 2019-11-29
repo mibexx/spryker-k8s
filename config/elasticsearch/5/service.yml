@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: env_elasticsearch
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: env-elasticsearch
   ports:
     - port: 9200
       protocol: TCP

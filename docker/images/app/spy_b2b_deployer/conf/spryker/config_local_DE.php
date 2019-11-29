@@ -38,6 +38,12 @@ $config[ApplicationConstants::BASE_URL_SSL_YVES] = sprintf(
 $config[ProductManagementConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
 $config[NewsletterConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
 $config[CustomerConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
+
+$config[ApplicationConstants::YVES_TRUSTED_HOSTS] = [
+    $config[ApplicationConstants::HOST_YVES],
+];
+
+
 // ---------- Zed host
 $config[ApplicationConstants::HOST_ZED] = sprintf('zed.de.%s.local', $domain);
 $config[ApplicationConstants::PORT_ZED] = '';

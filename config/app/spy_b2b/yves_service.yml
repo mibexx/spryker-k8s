@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: spryker_b2b_yves
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: app-yves
   ports:
     - port: 80
       protocol: TCP

@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: env_postgres
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: env-postgres
   ports:
     - port: 5432
       protocol: TCP

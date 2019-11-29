@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: env_rabbitmq
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: env-rabbitmq
   ports:
     - port: 5672
       name: service

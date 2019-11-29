@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: spryker_b2b_zed
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: app-zed
   ports:
     - port: 80
       protocol: TCP

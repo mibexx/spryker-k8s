@@ -5,7 +5,7 @@ metadata:
   labels:
     mibexx-svc: spryker_b2b_loadbalancer
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 80
       protocol: TCP

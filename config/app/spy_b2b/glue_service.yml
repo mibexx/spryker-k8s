@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: spryker_b2b_glue
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: app-glue
   ports:
     - port: 80
       protocol: TCP

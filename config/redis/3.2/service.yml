@@ -5,7 +5,8 @@ metadata:
   labels:
     mibexx-svc: env_redis
 spec:
-  type: NodePort
+  type: ClusterIP
+  externalName: env-redis
   ports:
     - port: 6379
       protocol: TCP
